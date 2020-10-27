@@ -103,11 +103,6 @@ $$Score_i = \beta_0 + \beta_1 STR_i + u_i; \quad i = 1,\ldots,n$$
 $$Score_i = \beta_0 + \beta_1 STR_i + u_i; \quad i = 1,\ldots,n$$
 
 ```{r echo=FALSE, error=FALSE, warning=FALSE}
-library(AER) # include Applied Econometrics with R library
-data(CASchools) # Load CASchools data
-# Generate a couple of useful variables
-CASchools$STR <- CASchools$students/CASchools$teachers  # Student-teacher ratio
-CASchools$Score <- (CASchools$read + CASchools$math)/2  # Student test score
 lm1 <- lm(Score ~ STR, data = CASchools) # Fitted model in lm1
 summary(lm1)
 ```
@@ -352,7 +347,7 @@ $$AHE_i = \beta_0 + \beta_1 YoEd_i + u_i; \quad i=1,\ldots,n$$
 ```{r echo=FALSE, error=FALSE, warning=FALSE}
 library(AER) # include Applied Econometrics with R library
 data(CPSSWEducation) # Load CPSSWEducation data
-lm1 <- lm(earnings ~ education, data = CPSSWEducation) # Fitted model in lm1
+lm2 <- lm(earnings ~ education, data = CPSSWEducation) # Fitted model in lm1
 # Scatter plot
 plot(CPSSWEducation$education,CPSSWEducation$earnings,
      main = "March 2016 Current Population Survey (US)",
@@ -360,7 +355,7 @@ plot(CPSSWEducation$education,CPSSWEducation$earnings,
      xlab = "Years of education",
      ylab = "Average hourly earnings (dollars)",
      ylim = c(0, 100))
-abline(lm1,
+abline(lm2,
        lwd = 3,
        col = "red")
 ```
@@ -391,7 +386,7 @@ $$\hat{u}_i = AHE_i - \hat{\beta}_0 - \hat{\beta}_1 YoEd_i; \quad i=1,\ldots,n$$
 
 ```{r echo=FALSE, error=FALSE, warning=FALSE}
 # Scatter plot
-plot(CPSSWEducation$education,lm1$residuals,
+plot(CPSSWEducation$education,lm2$residuals,
      main = "March 2016 Current Population Survey (US)",
      col = "blue",
      xlab = "Years of education",
@@ -472,14 +467,16 @@ plot(CPSSWEducation$education,lm1$residuals,
 ## Homoskedasticity-only standard errors in R
 
 ```{r echo=TRUE, eval = TRUE, error=FALSE, warning=FALSE}
-summary(lm1)
+# Regression output with homoskedastic-only SEs
+summary(lm2)
 ```
 
 ## Heteroskedasticity robust standard errors in R
 
 ```{r echo=TRUE, eval = TRUE, error=FALSE, warning=FALSE}
-library(parameters)
-parameters(lm1, robust = TRUE, vcov_type = "HC1")
+library(parameters) # include parameters library
+# Regression output with heteroskedastic robust SEs
+parameters(lm2, robust = TRUE, vcov_type = "HC1")
 ```
 
 # Summary

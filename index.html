@@ -713,7 +713,8 @@ EC2203 | Royal Holloway | 2020/21
 </ul>
 </section><section id="homoskedasticity-only-standard-errors-in-r" class="slide level2">
 <h2>Homoskedasticity-only standard errors in R</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">summary</span>(lm1)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Regression output with homoskedastic-only SEs</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">summary</span>(lm2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = earnings ~ education, data = CPSSWEducation)
@@ -734,8 +735,9 @@ EC2203 | Royal Holloway | 2020/21
 ## F-statistic: 441.9 on 1 and 2948 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section><section id="heteroskedasticity-robust-standard-errors-in-r" class="slide level2">
 <h2>Heteroskedasticity robust standard errors in R</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">library</span>(parameters)</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="kw">parameters</span>(lm1, <span class="dt">robust =</span> <span class="ot">TRUE</span>, <span class="dt">vcov_type =</span> <span class="st">&quot;HC1&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">library</span>(parameters) <span class="co"># include parameters library</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co"># Regression output with heteroskedastic robust SEs</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="kw">parameters</span>(lm2, <span class="dt">robust =</span> <span class="ot">TRUE</span>, <span class="dt">vcov_type =</span> <span class="st">&quot;HC1&quot;</span>)</span></code></pre></div>
 <pre><code>## Parameter   | Coefficient |   SE |         95% CI |     t |   df |      p
 ## -------------------------------------------------------------------------
 ## (Intercept) |       -3.13 | 0.93 | [-4.95, -1.32] | -3.39 | 2948 | &lt; .001
