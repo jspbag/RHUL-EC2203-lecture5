@@ -52,6 +52,19 @@ CASchools$Score <- (CASchools$read + CASchools$math)/2  # Student test score
 data(CPSSWEducation) # Load CPSSWEducation data
 ```
 
+# Graded homework I
+
+## Graded homework I
+
+- Problem set 6 must be handed in by **Monday, 09-11-2020 at 10:00am UK time** (via turnitin on Moodle). 
+
+- Submit a neatly typeset Microsoft Word (.doc or .docx) or PDF document w/ your written answers.
+
+- Submission clearly marked w/ candidate number or student ID. No names!
+
+- Numerical answers must be accompanied by at least one sentence. Verbosity is penalized.
+
+- Copy-paste your R-script into the bottom of your document. 20 mark penalty omitting the R-script.
 
 # The sampling distribution of the OLS estimator
 
