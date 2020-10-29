@@ -603,11 +603,11 @@ EC2203 | Royal Holloway | 2020/21
 </div>
 </section><section id="the-p-value-for-h_0-beta_1-0" class="slide level2">
 <h2>The <span class="math inline">\(p\)</span>-value for <span class="math inline">\(H_0:\, \beta_1 = 0\)</span></h2>
-<p><span class="math display">\[t = \frac{-2.28 - 0}{0.52} = -4.39\]</span></p>
+<p><span class="math display">\[t = \frac{-2.28 - 0}{0.48} = -4.75\]</span></p>
 <p><img src="index_files/figure-revealjs/unnamed-chunk-3-1.png" width="70%" /></p>
 </section><section id="the-p-value-for-h_0-beta_1--2" class="slide level2">
 <h2>The <span class="math inline">\(p\)</span>-value for <span class="math inline">\(H_0:\, \beta_1 = -2\)</span></h2>
-<p><span class="math display">\[t = \frac{-2.28 - (-2)}{0.52} = -0.54\]</span></p>
+<p><span class="math display">\[t = \frac{-2.28 - (-2)}{0.48} = -0.54\]</span></p>
 <p><img src="index_files/figure-revealjs/unnamed-chunk-4-1.png" width="70%" /></p>
 </section><section id="the-t-test" class="slide level2">
 <h2>The <span class="math inline">\(t\)</span>-test</h2>
@@ -618,7 +618,7 @@ EC2203 | Royal Holloway | 2020/21
 </div>
 <p>or equivalently,</p>
 <div class="box">
-<p>Reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(|t| &gt; z_{1-\alpha/2}\)</span>, where <strong>critical value</strong> <span class="math inline">\(z_{1-\alpha/2}\)</span> is <span class="math inline">\((1-\alpha/2)\times 100\)</span> p’tile in <span class="math inline">\(\mathcal{N}(0,1)\)</span></p>
+<p>Reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(|t| &gt; z_{1-\alpha/2}\)</span>, where the <strong>critical value</strong> <span class="math inline">\(z_{1-\alpha/2}\)</span> is <span class="math inline">\((1-\alpha/2)\times 100\)</span> percentile in <span class="math inline">\(\mathcal{N}(0,1)\)</span></p>
 </div></li>
 <li><p>Note, for <span class="math inline">\(\alpha = 0.05\)</span>, the critical value is <span class="math inline">\(z_{0.975} = 1.96\)</span></p></li>
 </ul>
@@ -713,8 +713,9 @@ EC2203 | Royal Holloway | 2020/21
 </ul>
 </section><section id="homoskedasticity-only-standard-errors-in-r" class="slide level2">
 <h2>Homoskedasticity-only standard errors in R</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Regression output with homoskedastic-only SEs</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">summary</span>(lm2)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Earnings-education regression (lm2)</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co"># Regression output with homoskedastic-only SEs</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="kw">summary</span>(lm2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = earnings ~ education, data = CPSSWEducation)
@@ -736,12 +737,53 @@ EC2203 | Royal Holloway | 2020/21
 </section><section id="heteroskedasticity-robust-standard-errors-in-r" class="slide level2">
 <h2>Heteroskedasticity robust standard errors in R</h2>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">library</span>(parameters) <span class="co"># include parameters library</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="co"># Regression output with heteroskedastic robust SEs</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="kw">parameters</span>(lm2, <span class="dt">robust =</span> <span class="ot">TRUE</span>, <span class="dt">vcov_type =</span> <span class="st">&quot;HC1&quot;</span>)</span></code></pre></div>
-<pre><code>## Parameter   | Coefficient |   SE |         95% CI |     t |   df |      p
-## -------------------------------------------------------------------------
-## (Intercept) |       -3.13 | 0.93 | [-4.95, -1.32] | -3.39 | 2948 | &lt; .001
-## education   |        1.47 | 0.07 | [ 1.33,  1.61] | 20.39 | 2948 | &lt; .001</code></pre>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co"># Earnings-education regression (lm2)</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># Regression output with heteroskedastic robust SEs</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="kw">parameters</span>(lm2, <span class="dt">robust =</span> <span class="ot">TRUE</span>, <span class="dt">vcov_type =</span> <span class="st">&quot;HC1&quot;</span>)</span></code></pre></div>
+<pre><code>## Parameter   | Coefficient |   SE |         95% CI | t(2948) |      p
+## --------------------------------------------------------------------
+## (Intercept) |       -3.13 | 0.93 | [-4.95, -1.32] |   -3.39 | &lt; .001
+## education   |        1.47 | 0.07 | [ 1.33,  1.61] |   20.39 | &lt; .001</code></pre>
+</section><section id="homoskedasticity-only-standard-errors-in-r-1" class="slide level2">
+<h2>Homoskedasticity-only standard errors in R</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Score-STR regression (lm1)</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co"># Regression output with homoskedastic-only SEs</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="kw">summary</span>(lm1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Score ~ STR, data = CASchools)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -47.727 -14.251   0.483  12.822  48.540 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 698.9329     9.4675  73.825  &lt; 2e-16 ***
+## STR          -2.2798     0.4798  -4.751 2.78e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 18.58 on 418 degrees of freedom
+## Multiple R-squared:  0.05124,    Adjusted R-squared:  0.04897 
+## F-statistic: 22.58 on 1 and 418 DF,  p-value: 2.783e-06</code></pre>
+</section><section id="the-p-value-for-homoskedasticity-only-se" class="slide level2">
+<h2>The <span class="math inline">\(p\)</span>-value for homoskedasticity-only SE</h2>
+<p><span class="math display">\[H_0:\, \beta_1 = 0; \quad t = \frac{-2.28 - 0}{0.48} = -4.75\]</span></p>
+<p><img src="index_files/figure-revealjs/unnamed-chunk-11-1.png" width="70%" /></p>
+</section><section id="heteroskedasticity-robust-standard-errors-in-r-1" class="slide level2">
+<h2>Heteroskedasticity robust standard errors in R</h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># Score-STR regression (lm1)</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co"># Regression output with heteroskedastic robust SEs</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="kw">parameters</span>(lm1, <span class="dt">robust =</span> <span class="ot">TRUE</span>, <span class="dt">vcov_type =</span> <span class="st">&quot;HC1&quot;</span>)</span></code></pre></div>
+<pre><code>## Parameter   | Coefficient |    SE |           95% CI | t(418) |      p
+## ----------------------------------------------------------------------
+## (Intercept) |      698.93 | 10.36 | [678.56, 719.31] |  67.44 | &lt; .001
+## STR         |       -2.28 |  0.52 | [ -3.30,  -1.26] |  -4.39 | &lt; .001</code></pre>
+</section><section id="the-p-value-for-heteroskedasticity-robust-se" class="slide level2">
+<h2>The <span class="math inline">\(p\)</span>-value for heteroskedasticity robust SE</h2>
+<p><span class="math display">\[H_0:\, \beta_1 = 0; \quad t = \frac{-2.28 - 0}{0.52} = -4.39\]</span></p>
+<p><img src="index_files/figure-revealjs/unnamed-chunk-13-1.png" width="70%" /></p>
 </section></section>
 <section><section id="summary" class="title-slide slide level1"><h1>Summary</h1></section><section id="summary-1" class="slide level2">
 <h2>Summary</h2>
